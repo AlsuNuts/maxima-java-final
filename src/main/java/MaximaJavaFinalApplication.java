@@ -15,7 +15,9 @@ import java.util.List;
 public class MaximaJavaFinalApplication implements CommandLineRunner {
 	@Autowired
 	private UserRepository userRepository;
-	@Autowired private PasswordEncoder encoder;
+	@Autowired
+	private PasswordEncoder encoder;
+
 	public static void main(String[] args) {
 		SpringApplication.run(MaximaJavaFinalApplication.class, args);
 	}
@@ -32,9 +34,4 @@ public class MaximaJavaFinalApplication implements CommandLineRunner {
 		userRepository.save(admin);
 
 	}
-/*	@PostConstruct
-	public void init(){
-
-	}
-
- */
+}

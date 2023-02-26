@@ -2,12 +2,14 @@ package model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "drugs")
 
 public class Drug {
     @Id @GeneratedValue
-    private Long id;
+    private Long drugId;
     @Column(name = "drug-name")
     private String name;
     @Column(name = "active-ingredient-dosage")
@@ -15,8 +17,23 @@ public class Drug {
     @Column(name = "need-a-prescription")
     private boolean needPrescription; //рецепт
 
-    public Drug(Long id, String name, int dosage, boolean needPrescription) {
-        this.id = id;
+
+    @ManyToMany
+    private List<User> users;
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public List<Pharmacy> getPharmacies() {
+        return pharmacies;
+    }
+
+    @ManyToOne
+    private List<Pharmacy> pharmacies;
+
+    public Drug(Long drugId, String name, int dosage, boolean needPrescription) {
+        this.drugId = drugId;
         this.name = name;
         this.dosage = dosage;
         this.needPrescription = needPrescription;
@@ -26,12 +43,12 @@ public class Drug {
 
     }
 
-    public Long getId() {
-        return id;
+    public Long getDrugId() {
+        return drugId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setDrugId(Long drugId) {
+        this.drugId = drugId;
     }
 
     public String getName() {
@@ -61,7 +78,7 @@ public class Drug {
     @Override
     public String toString() {
         return "Drug{" +
-                "id=" + id +
+                "id=" + drugId +
                 ", name='" + name + '\'' +
                 ", dosage=" + dosage +
                 ", needPrescription=" + needPrescription +

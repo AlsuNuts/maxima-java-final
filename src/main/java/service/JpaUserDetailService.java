@@ -1,5 +1,6 @@
 package service;
 
+import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,5 +15,6 @@ public class JpaUserDetailService implements UserDetailsService {
         return (UserDetails) userRepository.findById(username).orElseThrow(()-> new UsernameNotFoundException("Нет такого пользователя" + username));
         //TODO idea предложила добавить (UserDetails) может не будет работать
     }
+
 
 }

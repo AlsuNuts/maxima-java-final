@@ -19,6 +19,19 @@ public class User {
     private List<String> authorities;
     private boolean enabled;
 
+    @ManyToMany
+    private List<Drug> drugs;
+
+    public List<Drug> getDrugs() {
+        return drugs;
+    }
+
+    public List<Pharmacy> getPharmacies() {
+        return pharmacies;
+    }
+
+    @ManyToMany
+    private List<Pharmacy> pharmacies;
     public User(String login, String name, String phoneNumber, String email, String password, List<String> authorities, boolean enabled) {
         this.login = login;
         this.name = name;

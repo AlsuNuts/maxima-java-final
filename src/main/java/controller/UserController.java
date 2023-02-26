@@ -4,9 +4,11 @@ import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import service.DrugService;
 import service.JpaUserDetailService;
+import service.UserService;
 
 
 @RestController
@@ -14,11 +16,13 @@ import service.JpaUserDetailService;
 public class UserController {
 
     @Autowired
-    private JpaUserDetailService userService;
+    private JpaUserDetailService userDetailServiceService;
     @Autowired
     private DrugService drugService;
     @Autowired
     private ResponseEntity responseEntity;
+    @Autowired
+    private UserService userService;
 
 
     @ModelAttribute("user")
@@ -27,25 +31,15 @@ public class UserController {
             return null;
         }
         System.out.println(authentication.getPrincipal());
-        User user = userService.getUserByLogin(authentication.getPrincipal().toString());
-
+        User user = (User) userDetailServiceService.loadUserByUsername(authentication.getPrincipal().toString());
+        return user;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/")
+    public String sayHello(){
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
+        return "Hi! This is Spring Boot Project Интернет Аптека";
 
     }
+
 }
-/*
-@GetMapping("/user")
-    public List<Drug> getAll() {
-        return drugService.qetDrug();
-    }
-
-    @GetMapping("/drug/{id}")
-    public ResponseEntity<Drug> getOne(@PathVariable Long id) {
-        return ResponseEntity.ok(drugService.readDrug(id));
-    }
-
-    @PostMapping("/drug")
-    public ResponseEntity<Drug> add(@RequestBody Drug cat) {
-        drugService.saveDrug(cat);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
- */
