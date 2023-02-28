@@ -68,7 +68,7 @@ public class UserService {
 
 
         user.getDrugs().add(drug);
-        return userRepository.save(user);
+        return (List<Drug>) userRepository.save(user);
     }
 
 
@@ -81,6 +81,6 @@ public class UserService {
         Pharmacy pharmacy= pharmacyRepository.getById(phamId);
 
         user.getPharmacies().add(pharmacy);
-        return userRepository.save(user);
+        return (List<Pharmacy>) userRepository.save(user);
     }
 }
